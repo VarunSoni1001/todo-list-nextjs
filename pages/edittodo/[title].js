@@ -64,7 +64,7 @@ const Edit = () => {
           toast.error("TODO does't exists.");
         }
       } else {
-        localStorage.setItem("todos", JSON.stringify(todo));
+        localStorage.setItem("todos", JSON.stringify([todo]));
       }
     } catch (error) {
       console.error(error);
