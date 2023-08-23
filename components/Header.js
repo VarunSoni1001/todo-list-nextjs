@@ -12,7 +12,7 @@ const Header = () => {
       <Link href={'/todos'} className="mr-5 hover:text-orange-400 cursor-pointer transition-colors duration-500">TODO's</Link>
     </nav>
     <Link href={'/'} className="flex order-first lg:order-none lg:w-1/5 title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 md:mb-0">
-    <img src="/LOGO_TODO.png" className="w-14 sm:w-16 md:w-20 lg:w-24 xl:w-28" />
+    <img src="LOGO_TODO.png" className="w-14 sm:w-16 md:w-20 lg:w-24 xl:w-28" />
     </Link>
     <div className="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0">
     <span className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">

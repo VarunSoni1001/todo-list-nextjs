@@ -14,10 +14,10 @@ export default function Home() {
         let todos = localStorage.getItem('todos');
         if (todos) {
             let todosJson = JSON.parse(todos);
-            if (todosJson.filter(title => title.title === todo.title).length > 0) {
+            if (todosJson?.filter(title => title.title === todo.title)?.length > 0) {
                 toast.error('TODO already exists.');
             } else {
-                todosJson.push(todo);
+                todosJson?.push(todo);
                 await toast.promise(
                     new Promise((resolve, reject) => {
                         try {
@@ -60,7 +60,7 @@ export default function Home() {
           <div className="bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
             <div className="relative mb-4">
               <input
-                value={todo.title}
+                value={todo?.title}
                 onChange={onChange}
                 type="text"
                 placeholder="Title"
@@ -71,7 +71,7 @@ export default function Home() {
             </div>
             <div className="relative mb-4">
               <input
-                value={todo.description}
+                value={todo?.description}
                 onChange={onChange}
                 type="text"
                 placeholder="Description"
