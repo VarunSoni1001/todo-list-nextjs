@@ -9,7 +9,9 @@ const Edit = () => {
   const [todo, setTodo] = useState({ title: "", description: "" });
   const [noPage, setNoPage] = useState(false);
     
-    useEffect(() => {
+  useEffect(() => {
+    // Update the title when the router query changes
+    if (title) {
       let todos = localStorage.getItem("todos");
       if (todos) {
         let todosJson = JSON.parse(todos);
@@ -17,12 +19,13 @@ const Edit = () => {
         if (fetchTodo?.length > 0) {
           setTodo(fetchTodo[0]);
           setNoPage(false);
-          document.title = "Edit a TODO | TODO List | Varun Soni | Next.js"
+          document.title = "Edit a TODO | TODO List | Varun Soni | Next.js";
         } else {
           setNoPage(true);
-          document.title = "No TODO found"
+          document.title = "No TODO found";
         }
       }
+    }
   }, [title]);
   
   const saveTodo = async () => {
