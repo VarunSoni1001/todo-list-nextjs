@@ -115,8 +115,9 @@ const AuthProvider = ({ children }) => {
         .signOut()
         .then(() => {
           toast.loading("Logging you out...", {
-            duration: 2000,
+            duration: 1000,
           });
+          localStorage.removeItem('todos');
           router.push("/");
         });
     } catch (error) {
