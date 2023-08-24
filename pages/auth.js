@@ -112,7 +112,7 @@ export default function Home() {
           <form onSubmit={handleSignup}>
             <h2 className="text-2xl font-semibold mb-4">Sign Up</h2>
             <input
-              className="mb-6 w-full p-2 border rounded"
+              className="mb-6 w-full p-2 border rounded-3xl"
               type="email"
               id="email"
               name="email"
@@ -123,7 +123,7 @@ export default function Home() {
             />
 
             <input
-              className="w-full mb-3 p-2 border rounded"
+              className="w-full mb-3 p-2 border rounded-3xl"
               type="password"
               id="password"
               name="password"
