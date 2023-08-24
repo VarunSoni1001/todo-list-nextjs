@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-hot-toast";
+import { AuthContext } from "@/context/AuthContext";
 
 const Edit = () => {
   const router = useRouter();
   const { title } = router.query;
+  const { user, isLoggedIn } = useContext(AuthContext);
 
   const [todo, setTodo] = useState({ title: "", description: "" });
   const [noPage, setNoPage] = useState(false);
-    
+  const [prevTitle, setPrevTitle] = useState("");
+  const [prevDescription, setPrevDescription] = useState("");
+
   useEffect(() => {
-    // Update the title when the router query changes
     if (title) {
       let todos = localStorage.getItem("todos");
       if (todos) {
@@ -18,18 +21,26 @@ const Edit = () => {
         let fetchTodo = todosJson?.filter((e) => title === e.title);
         if (fetchTodo?.length > 0) {
           setTodo(fetchTodo[0]);
+          setPrevTitle(fetchTodo[0].title);
+          setPrevDescription(fetchTodo[0].description);
           setNoPage(false);
           document.title = "Edit a TODO | TODO List | Varun Soni | Next.js";
         } else {
           setNoPage(true);
-          document.title = "No TODO found";
+          document.title = "No TODO found | TODO List | Varun Soni | Next.js";
         }
       }
     }
   }, [title]);
-  
+
   const saveTodo = async () => {
     try {
+
+      if (!todo.title) {
+        toast.error("Title cannot be empty.");
+        return;
+      }
+
       let todos = localStorage.getItem("todos");
       if (todos) {
         let todosJson = JSON.parse(todos);
@@ -49,9 +60,9 @@ const Edit = () => {
                 setTimeout(() => {
                   localStorage.setItem("todos", JSON.stringify(todosJson));
                   resolve();
-                  setTimeout(() => {
-                    router.push('/todos')
-                  }, 1000);
+                  // setTimeout(() => {
+                  //   router.push('/todos')
+                  // }, 1000);
                 }, 1000);
               } catch (error) {
                 reject(error);
@@ -93,16 +104,16 @@ const Edit = () => {
         <>
           <section className="text-gray-600 body-font">
             <div className="container px-5 py-24 mx-auto flex flex-wrap items-center">
-                <h2 className="text-gray-900 text-lg font-medium title-font mb-5">
-                  Edit a TODO
-                </h2>
+              <h2 className="text-gray-900 text-lg font-medium title-font mb-5">
+                Edit a TODO
+              </h2>
               <div className="bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
                 <div className="relative mb-4">
                   <input
                     value={todo?.title}
                     onChange={onChange}
                     type="text"
-                    placeholder={`Title was: ${todo?.title}`}
+                    placeholder={`Title was: ${prevTitle}`}
                     id="title"
                     name="title"
                     className="w-full bg-white rounded-3xl border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
@@ -113,7 +124,7 @@ const Edit = () => {
                     value={todo?.description}
                     onChange={onChange}
                     type="text"
-                    placeholder={`Description was: ${todo?.description}`}
+                    placeholder={`Description was: ${prevDescription}`}
                     id="description"
                     name="description"
                     className="w-full bg-white rounded-3xl border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"

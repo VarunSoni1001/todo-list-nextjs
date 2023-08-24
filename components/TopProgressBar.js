@@ -41,7 +41,7 @@ const TopProgressBar = () => {
 
   return (
     <LoadingBar
-      color="orange"
+      color="#f98e54"
       height={4}
       progress={progress}
       waitingTime={400}
