@@ -62,7 +62,7 @@ const Todos = () => {
                         <MdDelete size={20} />
                       </button>
                       <Link
-                        href={`/edittodo/${todo?.title}`}
+                        href={`/edittodo/${encodeURIComponent(todo?.title)}`}
                         title="Edit TODO"
                         className="text-black-500 m-3"
                       >
