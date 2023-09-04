@@ -97,7 +97,7 @@ export default function Home() {
 
             <button
               onClick={addTodo}
-              disabled={!isLoggedIn} // Fix: Use 'disabled' prop with '!isLoggedIn' condition
+              disabled={!isLoggedIn}
               className={`inline-flex items-center text-white border-0 py-2 px-6 w-fit focus:outline-none transition-colors duration-300 rounded-3xl text-base mt-4 md:mt-0 ${!isLoggedIn ? 'disabled cursor-not-allowed bg-orange-200' : 'bg-orange-500 hover:bg-orange-300'}`}
             >
               Add TODO
