@@ -117,7 +117,6 @@ const AuthProvider = ({ children }) => {
           toast.loading("Logging you out...", {
             duration: 1000,
           });
-          localStorage.removeItem('todos');
           router.push("/");
         });
     } catch (error) {
@@ -128,6 +127,92 @@ const AuthProvider = ({ children }) => {
           duration: 5000,
         }
       );
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      toast.loading("Logging you in...", {
+        duration: 2000,
+      });
+      const provider = new firebase.auth.GoogleAuthProvider();
+      provider.setCustomParameters({
+        prompt: "select_account"
+      });
+      await firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(() => {
+          toast.success("Logged in successfully!", {
+            duration: 3000,
+          });
+          setIsLoggedIn(true);
+          router.push('/');
+        });
+    } catch (error) {
+      console.error(error);
+      const errorCode = error.code;
+      let errorMessage = "Error while logging you in, please try again.";
+      if (errorCode === "auth/popup-closed-by-user") {
+        errorMessage = "Google login popup closed before completion.";
+      } else if (errorCode === "auth/cancelled-popup-request") {
+        errorMessage = "Google login popup was cancelled by the user.";
+      } else if (errorCode === "auth/popup-blocked") {
+        errorMessage =
+          "Google login popup blocked by the browser, Please allow popups and try again.";
+      } else if (errorCode === "auth/popup-closed-by-user") {
+        errorMessage = "Google login popup closed before completion.";
+      } else if (errorCode === "auth/user-disabled") {
+        errorMessage =
+          "Your account has been disabled, Please contact support.";
+      } else if (errorCode === "auth/user-not-found") {
+        errorMessage =
+          "No account found with this email. Please sign up first.";
+      } else if (errorCode === "auth/wrong-password") {
+        errorMessage = "Invalid password, Please enter the correct password";
+      }
+      toast.error(errorMessage, {
+        duration: 5000,
+      });
+    }
+  };
+
+  const handleGoogleSignup = async () => {
+    try {
+      toast.loading("Making your account...", {
+        duration: 2000,
+      });
+      const provider = new firebase.auth.GoogleAuthProvider();
+      provider.setCustomParameters({
+        prompt: "select_account"
+      });
+      await firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(() => {
+          toast.success("Signed up successfully!", {
+            duration: 3000,
+          });
+          setIsLoggedIn(true);
+          router.push('/');
+        });
+    } catch (error) {
+      console.error(error);
+      const errorCode = error.code;
+      let errorMessage = "Error while making your account, please try again.";
+      if (errorCode === "auth/popup-closed-by-user") {
+        errorMessage = "Google sign-up popup closed before completion.";
+      } else if (errorCode === "auth/cancelled-popup-request") {
+        errorMessage = "Google sign-up popup was cancelled by the user.";
+      } else if (errorCode === "auth/popup-blocked") {
+        errorMessage =
+          "Google sign-up popup blocked by the browser, Please allow popups and try again.";
+      } else if (errorCode === "auth/popup-closed-by-user") {
+        errorMessage = "Google sign-up popup closed before completion.";
+      }
+      toast.error(errorMessage, {
+        duration: 5000,
+      });
     }
   };
 
@@ -179,6 +264,8 @@ const AuthProvider = ({ children }) => {
         logout,
         forgotPassword,
         isLoggedIn,
+        handleGoogleLogin,
+        handleGoogleSignup,
       }}
     >
       {children}

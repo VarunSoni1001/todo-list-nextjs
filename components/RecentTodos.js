@@ -1,17 +1,15 @@
-import Link from "next/link";
 import React, { useEffect, useState, useContext } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import { MdDelete, MdEditNote, MdTaskAlt } from "react-icons/md";
 import { getDatabase, ref, get, set } from "firebase/database";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 const db = getDatabase();
 
-const Todos = () => {
+const RecentTodos = () => {
   const [todoList, setTodoList] = useState([]);
-
   const { user, isLoggedIn } = useContext(AuthContext);
-
   const [isLoading, setIsLoading] = useState(true);
 
   const toggleCompletedStatus = (title, isCompleted) => {
@@ -98,22 +96,16 @@ const Todos = () => {
 
   return (
     <>
-      {!isLoading ? (
+      {!isLoading && isLoggedIn ? (
         <section className="text-black-500 body-font">
           <div className="container px-5 py-12 mx-auto">
-            <div className="text-center mb-8">
-              {todoList?.length > 0 ? (
-                <h1 className="text-3xl font-semibold text-gray-900">
-                  Your TODO's
-                </h1>
-              ) : (
-                <p className="mt-36 text-gray-500 text-xl">
-                  You don't have any TODO.
-                </p>
-              )}
-            </div>
             {todoList?.length > 0 && (
               <div className="overflow-x-auto">
+                <div className="text-center mb-8">
+                  <h1 className="text-3xl font-semibold text-gray-900">
+                    Your recent TODO's
+                  </h1>
+                </div>
                 <table className="table-auto w-full">
                   <thead>
                     <tr className="bg-orange-400 text-black">
@@ -128,7 +120,7 @@ const Todos = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {todoList?.map((todo, index) => (
+                    {todoList?.slice(0, 5)?.map((todo, index) => (
                       <tr
                         key={index}
                         className={`
@@ -140,8 +132,8 @@ const Todos = () => {
                         <td className="px-4 py-3">
                           <input
                             type="checkbox"
-                            checked={todo.isCompleted}
                             className="h-4 w-4 cursor-pointer accent-orange-600 transition-all duration-300 ease-in-out"
+                            checked={todo.isCompleted}
                             onClick={() =>
                               toggleCompletedStatus(
                                 todo.title,
@@ -150,17 +142,19 @@ const Todos = () => {
                             }
                           />
                         </td>
-                        <td className="px-4 py-3 font-semibold">
+                        <td
+                          className={`px-4 py-3 font-semibold`}
+                        >
                           {todo?.title}
                         </td>
-                        <td className="px-4 py-3">{todo?.description}</td>
+                        <td className="px-4 py-3">
+                          {todo?.description}
+                        </td>
                         <td className="px-4 py-3 flex items-center justify-end gap-5">
-                          <MdTaskAlt
-                            className={`text-green-700 ${
-                              todo.isCompleted ? "" : "opacity-0"
-                            }`}
-                            size={20}
-                          />
+                        <MdTaskAlt
+                              className={`text-green-700 ${todo.isCompleted ? "" : "opacity-0"}`}
+                              size={20}
+                            />
                           <button
                             title="Delete TODO"
                             onClick={() => deleteTodo(todo?.title)}
@@ -182,6 +176,16 @@ const Todos = () => {
                     ))}
                   </tbody>
                 </table>
+                {todoList.length > 5 && (
+                  <p className="w-full text-sm lg:text-base pr-4 mt-6 text-right">
+                    <Link
+                      href={"/todos"}
+                      className="text-orange-700 hover:underline"
+                    >
+                      view all
+                    </Link>
+                  </p>
+                )}
               </div>
             )}
           </div>
@@ -189,9 +193,9 @@ const Todos = () => {
       ) : (
         <div className="flex items-center justify-center">
           <img
-            src="/loader.svg"
+            src="/inline_loader.svg"
             alt="Loading..."
-            className="w-24 ml-12 mt-[15%] lg:w-32 2xl:w-36"
+            className="w-24 ml-20 lg:w-32 2xl:w-36"
           />
         </div>
       )}
@@ -199,4 +203,4 @@ const Todos = () => {
   );
 };
 
-export default Todos;
+export default RecentTodos;
