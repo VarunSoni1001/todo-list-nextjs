@@ -13,16 +13,16 @@ const Footer = () => {
     </Link>
     <p className="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">2023 &copy; Varun Soni</p>
     <span className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
-      <Link href={'https://twitter.com/Varunsoni1001'} rel=”noopener noreferrer” className="ml-3 text-gray-500 hover:text-orange-400 transition-colors duration-500" target='_blank'>
+      <Link href={'https://twitter.com/Varunsoni1001'} rel="noopener noreferrer" className="ml-3 text-gray-500 hover:text-orange-400 transition-colors duration-500" target='_blank'>
         <FaXTwitter />
       </Link>
-      <Link href={'https://www.instagram.com/varunsoni.dev'} rel=”noopener noreferrer” className="ml-3 text-gray-500 hover:text-orange-400 transition-colors duration-500" target='_blank'>
+      <Link href={'https://www.instagram.com/varunsoni.dev'} rel="noopener noreferrer" className="ml-3 text-gray-500 hover:text-orange-400 transition-colors duration-500" target='_blank'>
         <BsInstagram />
       </Link>
-      <Link href={'https://www.linkedin.com/in/varunsoni1001'} rel=”noopener noreferrer” className="ml-3 text-gray-500 hover:text-orange-400 transition-colors duration-500" target='_blank'>
+      <Link href={'https://www.linkedin.com/in/varunsoni1001'} rel="noopener noreferrer" className="ml-3 text-gray-500 hover:text-orange-400 transition-colors duration-500" target='_blank'>
         <BsLinkedin />
       </Link>
-      <Link href={'https://github.com/VarunSoni1001'} rel=”noopener noreferrer” className="ml-3 text-gray-500 hover:text-orange-400 transition-colors duration-500" target='_blank'>
+      <Link href={'https://github.com/VarunSoni1001'} rel="noopener noreferrer" className="ml-3 text-gray-500 hover:text-orange-400 transition-colors duration-500" target='_blank'>
         <BsGithub />
       </Link>
     </span>
